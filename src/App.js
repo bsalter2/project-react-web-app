@@ -1,21 +1,38 @@
 import React from 'react';
 import './App.css';
-import {BrowserRouter, Navigate} from "react-router-dom"
-import {Routes, Route} from "react-router"
-import Search from './search-page';
-import Home from './home-page';
+import { BrowserRouter, Navigate } from "react-router-dom"
+import { Routes, Route } from "react-router"
+import SearchScreen from './search-page';
+import HomeScreen from './home-page';
+import DetailsScreen from './details-page';
+import ProfileScreen from './profile-page';
+import LoginScreen from './login-page';
+import NavigationSidebar from './navigation-sidebar';
 
 function App() {
-   return (
-      <BrowserRouter>
-        <div className="container">
-        <Routes>
-          <Route path="/" element={<Navigate to="/home"/>}/>
-          <Route path="/home/*" element={<Home/>}/>
-          <Route path="/search/*" element={<Search/>}/>
-        </Routes>
+  return (
+    <BrowserRouter>
+      <div className="row">
+        <div className="col-xxl-3 col-xl-2 col-lg-2 col-md-3 col-sm-3">
+          <NavigationSidebar />
         </div>
-      </BrowserRouter>
+        <div className="col-xxl-6 col-xl-7 col-lg-7 col-md-9 col-sm-9">
+          <Routes>
+            <Route path="/" element={<Navigate to="/home" />} />
+            <Route path="/home/" element={<HomeScreen />} />
+            <Route path="/search/" element={<SearchScreen />} />
+            <Route path="/details/" element={<DetailsScreen />} />
+            <Route path="/profile/" element={<ProfileScreen />} />
+            <Route path="/login/" element={<LoginScreen />} />
+          </Routes>
+        </div>
+        <div className="col-xxl-3 col-xl-3 col-lg-2 d-none d-lg-block">
+          TODO
+        </div>
+      </div>
+
+    </BrowserRouter>
+
   );
 }
 

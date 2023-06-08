@@ -1,9 +1,9 @@
 import React from 'react'
 
-function Home() {
+function HomeScreen() {
   return (
-    <div>Home</div>
+    <div>HomeScreen</div>
   )
 }
 
-export default Home
+export default HomeScreen

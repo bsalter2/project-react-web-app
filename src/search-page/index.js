@@ -1,9 +1,9 @@
 import React from 'react'
 
-function Search() {
+function SearchScreen() {
   return (
-    <div>Search</div>
+    <div>SearchScreen</div>
   )
 }
 
-export default Search
+export default SearchScreen
