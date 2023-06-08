@@ -13,10 +13,10 @@ function App() {
   return (
     <BrowserRouter>
       <div className="row">
-        <div className="col-xxl-3 col-xl-2 col-lg-2 col-md-3 col-sm-3">
+        <div className="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-3">
           <NavigationSidebar />
         </div>
-        <div className="col-xxl-6 col-xl-7 col-lg-7 col-md-9 col-sm-9">
+        <div className="col-xxl-6 col-xl-6 col-lg-6 col-md-9 col-sm-9">
           <Routes>
             <Route path="/" element={<Navigate to="/home" />} />
             <Route path="/home/" element={<HomeScreen />} />
