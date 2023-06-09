@@ -1,8 +1,9 @@
 import React from 'react'
+import RecipeItem from './recipe-details'
 
 function DetailsScreen() {
   return (
-    <div>DetailsScreen</div>
+    <RecipeItem/>
   )
 }
 

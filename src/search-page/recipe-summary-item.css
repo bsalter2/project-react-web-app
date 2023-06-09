@@ -1,3 +1,7 @@
 .wd-recipe-summary {
     margin: 30px 20px 0px;
 }
+
+.wd-recipe-link {
+    text-decoration: none
+}
