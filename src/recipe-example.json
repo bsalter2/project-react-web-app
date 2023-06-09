@@ -10,4 +10,17 @@
     "prep_time": 5,
     "cook_time": 40,
     "serving": "7-10"
+},
+{
+    "_id": 2,
+    "name": "Tagliatelle",
+    "tags": ["pasta", "italian"],
+    "directions": ["1....", "2...", "3..."],
+    "image":"tagliatelle.jpeg",
+    "ingredients": ["flour", "oil", "rosemary", "sugar", "salt", "yeast"],
+    "difficulty": 3,
+    "rating": 6,
+    "prep_time": 5,
+    "cook_time": 20,
+    "serving": "6-8"
 }]

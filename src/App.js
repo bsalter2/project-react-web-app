@@ -12,7 +12,7 @@ import NavigationSidebar from './navigation-sidebar';
 function App() {
   return (
     <BrowserRouter>
-      <div className="row">
+      <div className="row wd-frame">
         <div className="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-3">
           <NavigationSidebar />
         </div>

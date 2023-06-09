@@ -1,5 +1,5 @@
 import React from 'react'
-import RecipeSummaryItem from './recipe_summary_item'
+import RecipeSummaryItem from './recipe-summary-item'
 import RecipeExamples from '../recipe-example.json'
 
 function RecipeSummaryList() {

@@ -15,8 +15,6 @@ function SearchScreen() {
     </div>
 
     <RecipeSummaryList/>
-
-
   </div>
   )
 }
