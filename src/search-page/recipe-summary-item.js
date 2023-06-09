@@ -21,8 +21,9 @@ const RecipeSummaryItem = (
   }
 ) => {
   return (
-    <Link className='wd-recipe-link' to={"/details"} >
       <li className="list-group-item border wd-recipe-summary">
+            <Link className='wd-recipe-link' to={"/details"} >
+
         <div className="row align-items-center">
           <div className="col-10">
             <div className="fw-bolder container fs-5">{recipe.name}</div>
@@ -34,8 +35,8 @@ const RecipeSummaryItem = (
             <img height={100} width={80} className="float-end rounded-3" src={require(`../images/${recipe.image}`)} alt="" />
           </div>
         </div>
+        </Link>
       </li>
-    </Link>
   )
 }
 
