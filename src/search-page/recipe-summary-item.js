@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom';
 const RecipeSummaryItem = (
   {
     recipe = {
-      "_id": 1,
-      "name": "Rosemary Foccia",
+      "id": 1,
+      "topic": "Rosemary Foccia",
       "tags": ["bread", "italian"],
       "directions": ["1...", "2...", "3..."],
       "image": "rosemary_foccacia.jpeg",
@@ -22,17 +22,15 @@ const RecipeSummaryItem = (
 ) => {
   return (
       <li className="list-group-item border wd-recipe-summary">
-            <Link className='wd-recipe-link' to={"/details"} >
+            <Link className='wd-recipe-link' to={`/details/${recipe.id}`} >
 
         <div className="row align-items-center">
           <div className="col-10">
-            <div className="fw-bolder container fs-5">{recipe.name}</div>
-            <div className='container'>Difficulty: {recipe.difficulty} / 10</div>
-            <div className='container'>Rating: {recipe.rating} / 10</div>
-            <div className='fst-italic container'>Tags: {recipe.tags.join(", ")}</div>
+            <div className="fw-bolder container fs-5">{recipe.title}</div>
+
           </div>
           <div className="col-2">
-            <img height={100} width={80} className="float-end rounded-3" src={require(`../images/${recipe.image}`)} alt="" />
+            <img height={100} width={80} className="float-end rounded-3" src={recipe.image} alt="" />
           </div>
         </div>
         </Link>

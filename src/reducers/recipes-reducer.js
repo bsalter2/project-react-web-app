@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { findAllRecipesThunk } from "../services/recipes-thunk";
 
 const initialState = {
     recipes: [],
@@ -20,21 +21,21 @@ const template = {
 }
 
 
-const tuitsSlice = createSlice({
+const RecipesSlice = createSlice({
     name: 'recipes',
     initialState,
     extraReducers: {
-        [findRecipeThunk.pending]:
+        [findAllRecipesThunk.pending]:
             (state) => {
                 state.loading = true
                 state.recipes = []
             },
-        [findRecipeThunk.fulfilled]:
+        [findAllRecipesThunk.fulfilled]:
             (state, { payload }) => {
                 state.loading = false
                 state.recipes = payload
             },
-        [findRecipeThunk.rejected]:
+        [findAllRecipesThunk.rejected]:
             (state, action) => {
                 state.loading = false
                 state.error = action.error
@@ -43,4 +44,4 @@ const tuitsSlice = createSlice({
     reducers: {}
 });
 
-export default tuitsSlice.reducer;
+export default RecipesSlice.reducer;
