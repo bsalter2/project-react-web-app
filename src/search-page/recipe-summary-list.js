@@ -5,21 +5,14 @@ import { findAllRecipesThunk } from "../services/recipes-thunk";
 
 function RecipeSummaryList() {
     const { recipes, loading } = useSelector(state => state.recipes)
-    const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(findAllRecipesThunk())
-    }, [])
 
     return (
 
         <ul className="list-group">
-            {loading &&
+            {loading ?
                 <li className="list-group-item">
                     Loading...
-                </li>
-            }
-            {
-                recipes.map(recipe =>
+                </li> : recipes.map(recipe =>
                     <RecipeSummaryItem
                         key={recipe.id} recipe={recipe} />)
             }

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { findAllRecipesThunk } from "../services/recipes-thunk";
+import { findAllRecipesThunk, findRecipesByStringThunk } from "../services/recipes-thunk";
 
 const initialState = {
     recipes: [],
@@ -11,7 +11,7 @@ const template = {
     "name": "Rosemary Foccia",
     "tags": ["bread", "italian"],
     "directions": ["1...", "2...", "3..."],
-    "image":"rosemary_foccacia.jpeg",
+    "image": "rosemary_foccacia.jpeg",
     "ingredients": ["flour", "oil", "rosemary", "sugar", "salt", "yeast"],
     "difficulty": 4,
     "rating": 7,
@@ -36,6 +36,21 @@ const RecipesSlice = createSlice({
                 state.recipes = payload
             },
         [findAllRecipesThunk.rejected]:
+            (state, action) => {
+                state.loading = false
+                state.error = action.error
+            },
+        [findRecipesByStringThunk.pending]:
+            (state) => {
+                state.loading = true
+                state.recipes = []
+            },
+        [findRecipesByStringThunk.fulfilled]:
+            (state, { payload }) => {
+                state.loading = false
+                state.recipes = payload
+            },
+        [findRecipesByStringThunk.rejected]:
             (state, action) => {
                 state.loading = false
                 state.error = action.error

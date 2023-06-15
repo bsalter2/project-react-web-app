@@ -1,4 +1,4 @@
-import React , { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import RecipeItem from './recipe-details'
 import { useParams } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux";
@@ -14,19 +14,18 @@ function DetailsScreen() {
         dispatch(findRecipesByIdThunk(id))
     }, [])
 
-  return (
-    <>
-    {loading &&
-        <li className="list-group-item">
-            Loading...
-        </li>
-    }
-    {!loading &&
-    <RecipeItem 
-    key={recipe.id} recipe={recipe} 
-    />}
-    </>
-  )
+    return (
+        <>
+            {loading ?
+                <li className="list-group-item">
+                    Loading...
+                </li > : <RecipeItem
+                    key={recipe.id} recipe={recipe}
+                />
+
+            }
+        </>
+    )
 }
 
 export default DetailsScreen

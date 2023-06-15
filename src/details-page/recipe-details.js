@@ -3,7 +3,7 @@ import "./recipe-details.css"
 
 const RecipeItem = (
     {
-        recipe = {
+        recipe = [{
             "_id": 1,
             "title": "Rosemary Foccia",
             "tags": ["bread", "italian"],
@@ -27,11 +27,11 @@ const RecipeItem = (
                 "original": "1 tbsp butter"
                 },
                 {
-                    "original": "1 tbsp butter"
+                "original": "1 tbsp butter"
                     },
         ]
 
-        }
+        }]
     }
 ) => {
     return (
@@ -63,7 +63,7 @@ const RecipeItem = (
             {recipe.analyzedInstructions[0].steps.map((direction) =>
                 <div className="container wd-recipe-details"> {direction.number}. {direction.step}</div>
             )}
-        </div>
+        </div> 
     )
 }
 
