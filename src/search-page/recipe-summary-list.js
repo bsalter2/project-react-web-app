@@ -3,10 +3,9 @@ import RecipeSummaryItem from './recipe-summary-item'
 import {  useSelector } from "react-redux";
 
 
-function RecipeSummaryList({_recipes}) {
+function RecipeSummaryList() {
 
-    const { loading } = useSelector(state => state.recipes)
-
+    const { recipes, loading } = useSelector(state => state.recipes)
 
     return (
 
@@ -14,7 +13,7 @@ function RecipeSummaryList({_recipes}) {
             {loading ?
                 <li className="list-group-item">
                     Loading...
-                </li> : _recipes.map(recipe =>
+                </li> : recipes.map(recipe =>
                     <RecipeSummaryItem
                         key={recipe.id} recipe={recipe} />)
             }
