@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import RecipeSummaryItem from './recipe-summary-item'
-import { useDispatch, useSelector } from "react-redux";
-import { findAllRecipesThunk } from "../services/recipes-thunk";
+import {  useSelector } from "react-redux";
 
-function RecipeSummaryList() {
-    const { recipes, loading } = useSelector(state => state.recipes)
+
+function RecipeSummaryList({_recipes}) {
+
+    const { loading } = useSelector(state => state.recipes)
+
 
     return (
 
@@ -12,7 +14,7 @@ function RecipeSummaryList() {
             {loading ?
                 <li className="list-group-item">
                     Loading...
-                </li> : recipes.map(recipe =>
+                </li> : _recipes.map(recipe =>
                     <RecipeSummaryItem
                         key={recipe.id} recipe={recipe} />)
             }
