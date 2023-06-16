@@ -34,6 +34,7 @@ function App() {
               <Route path="/" element={<Navigate to="/home" />} />
               <Route path="/home/" element={<HomeScreen />} />
               <Route path="/search/" element={<SearchScreen />} />
+              <Route path="/search/:sc" element={<SearchScreen />} />
               <Route path="/details/:did" element={<DetailsScreen />} />
               <Route path="/profile/" element={<ProfileScreen />} />
               <Route path="/login/" element={<LoginScreen />} />

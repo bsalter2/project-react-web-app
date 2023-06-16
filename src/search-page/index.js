@@ -2,20 +2,29 @@ import React, {useState, useEffect} from "react";
 import RecipeSummaryList from './recipe-summary-list'
 import { useDispatch, useSelector } from "react-redux";
 import { findRecipesByStringThunk, findAllRecipesThunk } from "../services/recipes-thunk";
+import { useNavigate, useParams} from 'react-router-dom';
 
 
 function SearchScreen() {
     const { recipes, loading } = useSelector(state => state.recipes)
+    const {sc} = useParams()
+    const navigate = useNavigate()
     const [search, setSearch] = useState();
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(findAllRecipesThunk())
+        if (!sc) {
+            dispatch(findAllRecipesThunk())
+        }
+        else {
+            dispatch(findRecipesByStringThunk(sc))
+        }
     }, [])
 
     const handleKeyDown = event => {
         if (event.key === 'Enter') {
           event.preventDefault();
+          navigate(`/search/${search}`);
           dispatch(findRecipesByStringThunk(search))
         }
     }
