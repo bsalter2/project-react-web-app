@@ -1,8 +1,7 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import welcomeGif from '../images/welcome.gif';
-
-
 
 const HomePageContainer = styled.div`
     display: flex;
@@ -14,6 +13,7 @@ const HomePageContainer = styled.div`
     background-color: #15202B;
     color: white;
 `;
+
 const Title = styled.h1`
     text-align: center;
     color: white;
@@ -49,15 +49,22 @@ const Button = styled.button`
 `;
 
 function HomeScreen() {
+    const navigate = useNavigate();
+
+    const handleButtonClick = () => {
+        navigate('/search');
+    }
+
     return (
         <HomePageContainer>
             <Title>Welcome to Our Recipe Website!</Title>
             <Subtitle>Discover the best recipes from around the world</Subtitle>
             <WelcomeImage src={welcomeGif} alt="Welcome" />
-            <Button>Begin Search for Recipes</Button>
+            <Button onClick={handleButtonClick}>Begin Search for Recipes</Button>
         </HomePageContainer>
     )
 }
 
 export default HomeScreen;
+
 
