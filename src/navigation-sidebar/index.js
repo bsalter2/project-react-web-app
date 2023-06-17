@@ -26,7 +26,7 @@ const StyledLink = styled(Link)`
     font-weight: 700;
     border-bottom: 1px solid white;
     &:hover {
-        background-color: rgba(29, 161, 242, 0.1);
+        background-color: #1DA1F2;
     }
 `;
 

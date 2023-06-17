@@ -1,24 +1,37 @@
 import React from "react";
-import RecipeSummaryItem from './recipe-summary-item'
-import {  useSelector } from "react-redux";
+import RecipeSummaryItem from './recipe-summary-item';
+import { useSelector } from "react-redux";
+import styled from 'styled-components';
 
+const StyledList = styled.ul`
+  list-style: none;
+  padding: 0;
+`;
+
+const LoadingListItem = styled.li`
+  border: 2px solid white;
+  border-radius: 10px;
+  padding: 15px;
+  margin: 10px 0;
+  background-color: #15202b;
+  color: white;
+`;
 
 function RecipeSummaryList() {
 
-    const { recipes, loading } = useSelector(state => state.recipes)
+    const { recipes, loading } = useSelector(state => state.recipes);
 
     return (
-
-        <ul className="list-group">
+        <StyledList>
             {loading ?
-                <li className="list-group-item">
+                <LoadingListItem>
                     Loading...
-                </li> : recipes.map(recipe =>
+                </LoadingListItem> : recipes.map(recipe =>
                     <RecipeSummaryItem
                         key={recipe.id} recipe={recipe} />)
             }
-        </ul>
+        </StyledList>
     )
 }
 
-export default RecipeSummaryList
+export default RecipeSummaryList;

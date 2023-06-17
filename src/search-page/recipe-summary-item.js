@@ -1,6 +1,39 @@
 import React from 'react'
-import './recipe-summary-item.css';
+import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+
+const ListItem = styled.li`
+  display: flex;
+  align-items: center;
+  border: 2px solid white;
+  border-radius: 10px;
+  padding: 15px;
+  margin: 10px 0;
+  background-color: #15202b;
+  color: white;
+`;
+
+const RecipeLink = styled(Link)`
+  text-decoration: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  &:hover {
+    color: #1DA1F2;
+  }
+`;
+
+const RecipeTitle = styled.div`
+  font-size: 18px;
+  font-weight: 700;
+  flex-grow: 1;
+`;
+
+const RecipeImage = styled.img`
+  height: 80px;
+  border-radius: 10px;
+`;
 
 const RecipeSummaryItem = (
   {
@@ -16,25 +49,16 @@ const RecipeSummaryItem = (
       "prep_time": 5,
       "cook_time": 40,
       "serving": "7-10"
-
     }
   }
 ) => {
   return (
-      <li className="list-group-item border wd-recipe-summary">
-            <Link className='wd-recipe-link' to={`/details/${recipe.id}`} >
-
-        <div className="row align-items-center">
-          <div className="col-10">
-            <div className="fw-bolder container fs-5">{recipe.title}</div>
-
-          </div>
-          <div className="col-2">
-            <img height={100} width={80} className="float-end rounded-3" src={recipe.image} alt="" />
-          </div>
-        </div>
-        </Link>
-      </li>
+      <ListItem>
+        <RecipeLink to={`/details/${recipe.id}`} >
+          <RecipeTitle>{recipe.title}</RecipeTitle>
+          <RecipeImage src={recipe.image} alt={recipe.title} />
+        </RecipeLink>
+      </ListItem>
   )
 }
 

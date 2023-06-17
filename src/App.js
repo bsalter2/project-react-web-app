@@ -17,7 +17,7 @@ import TrendingSidebar from './trending/trending';
 
 const AppContainer = styled.div`
   background-color: #15202b;
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
 `;
 
