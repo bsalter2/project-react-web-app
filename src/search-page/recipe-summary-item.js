@@ -56,7 +56,7 @@ const RecipeSummaryItem = (
       <ListItem>
         <RecipeLink to={`/details/${recipe.id}`} >
           <RecipeTitle>{recipe.title}</RecipeTitle>
-          <RecipeImage src={recipe.image} alt={recipe.title} />
+          <RecipeImage src={recipe.image} alt={"./images/alt_recipe_image.jpeg"} />
         </RecipeLink>
       </ListItem>
   )
