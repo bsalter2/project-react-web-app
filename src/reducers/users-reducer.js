@@ -50,7 +50,7 @@ const usersSlice = createSlice({
     },
     [createUserThunk.fulfilled]: (state, action) => {
       state.currentUser = action.payload;
-      state.users = [...state.users, currentUser];
+      state.users = [...state.users, state.currentUser];
       state.loading = false;
       state.error = null;
     },
@@ -79,6 +79,7 @@ const usersSlice = createSlice({
     },
     [updateUserThunk.fulfilled]: (state, action) => {
       state.currentUser = action.payload;
+      state.users = [...state.users, state.currentUser];
       state.loading = false;
       state.error = null;
     },

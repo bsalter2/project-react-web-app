@@ -19,6 +19,9 @@ import authReducer from "./reducers/auth-reducer";
 import ProtectedRoute from "./login-page/protected-route";
 import RegisterScreen from "./register-page";
 import UsersContextLoader from "./login-page/users-context-loader";
+import ProfileLikes from "./profile-page/profile-likes";
+import ProfileFollowers from "./profile-page/profile-followers";
+import ProfileFollowing from "./profile-page/profile-following";
 
 const AppContainer = styled.div`
   background-color: #15202b;
@@ -55,13 +58,37 @@ function App() {
                   <Route
                     path="/profile/"
                     element={
-                      <ProtectedRoute>
-                        <ProfileScreen />
-                      </ProtectedRoute>
+                      // <ProtectedRoute>
+                      <ProfileScreen />
+                      // </ProtectedRoute>
                     }
                   />
-                  <Route path="/login/" element={<LoginScreen />} />
-                  <Route path="/register/" element={<RegisterScreen />} />
+                  <Route path="/login" element={<LoginScreen />} />
+                  <Route path="/register" element={<RegisterScreen />} />
+                  <Route
+                    path="/profile/likes"
+                    element={
+                      // <ProtectedRoute>
+                      <ProfileLikes />
+                      // </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/profile/followers"
+                    element={
+                      // <ProtectedRoute>
+                        <ProfileFollowers />
+                      // </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/profile/following"
+                    element={
+                      // <ProtectedRoute>
+                        <ProfileFollowing />
+                      // </ProtectedRoute>
+                    }
+                  />
                 </Routes>
               </div>
               <div className="col-xxl-3 col-xl-3 col-lg-2 d-none d-lg-block">
