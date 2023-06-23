@@ -5,7 +5,6 @@ import { Routes, Route } from "react-router";
 import SearchScreen from "./search-page";
 import HomeScreen from "./home-page";
 import DetailsScreen from "./details-page";
-import ProfileScreen from "./profile-page";
 import LoginScreen from "./login-page";
 import NavigationSidebar from "./navigation-sidebar";
 import { Provider } from "react-redux";
@@ -19,6 +18,8 @@ import authReducer from "./reducers/auth-reducer";
 import ProtectedRoute from "./login-page/protected-route";
 import RegisterScreen from "./register-page";
 import UsersContextLoader from "./login-page/users-context-loader";
+import ProfileScreenPublic from "./profile-page/profile-other";
+import ProfileScreen from "./profile-page/profile-self";
 import ProfileLikes from "./profile-page/profile-likes";
 import ProfileFollowers from "./profile-page/profile-followers";
 import ProfileFollowing from "./profile-page/profile-following";
@@ -56,6 +57,10 @@ function App() {
                   <Route path="/search/:sc" element={<SearchScreen />} />
                   <Route path="/details/:did" element={<DetailsScreen />} />
                   <Route
+                    path="/profile/:uid"
+                    element={<ProfileScreenPublic />}
+                  />
+                  <Route
                     path="/profile/"
                     element={
                       // <ProtectedRoute>
@@ -77,7 +82,7 @@ function App() {
                     path="/profile/followers"
                     element={
                       // <ProtectedRoute>
-                        <ProfileFollowers />
+                      <ProfileFollowers />
                       // </ProtectedRoute>
                     }
                   />
@@ -85,7 +90,7 @@ function App() {
                     path="/profile/following"
                     element={
                       // <ProtectedRoute>
-                        <ProfileFollowing />
+                      <ProfileFollowing />
                       // </ProtectedRoute>
                     }
                   />
