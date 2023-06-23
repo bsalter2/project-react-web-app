@@ -17,6 +17,14 @@ export const getUserByIDThunk = createAsyncThunk(
   }
 );
 
+export const getOtherUserByIDThunk = createAsyncThunk(
+  "users/getOtherUserByID",
+  async (id) => {
+    const user = await userService.getUserByID(id);
+    return user;
+  }
+);
+
 export const createUserThunk = createAsyncThunk(
   "users/createUser",
   async (user) => {

@@ -1,102 +1,49 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router";
-import { profileThunk, logoutThunk } from "../services/auth-thunk";
-import { updateUserThunk } from "../services/users-thunk";
-function ProfileScreen() {
-  const { currentUser } = useSelector((state) => state.currentUser);
-  const [profile, setProfile] = useState(currentUser);
+import { useParams } from "react-router-dom";
+import { getOtherUserByIDThunk } from "../services/users-thunk";
+
+function ProfileScreenPublic() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const save = async () => {
-    await dispatch(updateUserThunk(profile));
-  };
-
-  const handleFollowersClick = () => {
-    navigate("/profile/followers");
-  };
-
-  const handleFollowingClick = () => {
-    navigate("/profile/following");
-  };
-
-  const handleLikesClick = () => {
-    navigate("/profile/likes");
-  };
-
+  const params = useParams();
+  const id = params.uid;
+  const [user, setUser] = useState(null);
   useEffect(() => {
-    const loadProfile = async () => {
-      const { payload } = await dispatch(profileThunk());
-      setProfile(payload);
+    const fetchUser = async () => {
+      const userData = await dispatch(getOtherUserByIDThunk(id));
+      setUser(userData);
     };
-    loadProfile();
-  }, []);
+    fetchUser();
+  }, [dispatch, id]);
+
+  if (!user) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <div>
-      {profile && (
-        <div className="container">
-          <div className="row">
-            <label>First Name</label>
-            <input
-              type="text"
-              value={profile.firstName}
-              onChange={(event) => {
-                const newProfile = {
-                  ...profile,
-                  firstName: event.target.value,
-                };
-                setProfile(newProfile);
-              }}
-            />
-          </div>
-          <div className="row">
-            <label>Last Name</label>
-            <input
-              type="text"
-              value={profile.lastName}
-              onChange={(event) => {
-                const newProfile = {
-                  ...profile,
-                  lastName: event.target.value,
-                };
-                setProfile(newProfile);
-              }}
-            />
-          </div>
-          <button className="btn btn success row" onClick={save}>
-            Save{" "}
-          </button>
-          <div className="row">
-            <label>Phone Number: {profile.phoneNumber}</label>
-          </div>
-          <div className="row">
-            <label>Email: {profile.email}</label>
-          </div>
-          <div className="row">
-            <div className="col-4" onClick={handleFollowersClick}>
-              <label>Followers: {profile.followers.length}</label>
-            </div>
-            <div className="col-4" onClick={handleFollowingClick}>
-              <label>Following: {profile.following.length}</label>
-            </div>
-            <div className="col-4" onClick={handleLikesClick}>
-              <label>Likes: {profile.likes.length}</label>
-            </div>
-          </div>
+    <div className="container">
+      <div className="row">
+        <label>Name</label>
+        <label>
+          {user.firstName} {user.lastName}
+        </label>
+        <label>Username</label>
+        <label>{user.userName}</label>
+      </div>
+      <div className="row">
+        <div className="col-4" onClick={handleFollowersClick}>
+          <label>Followers: {user.followers.length}</label>
         </div>
-      )}
-      <button
-        onClick={() => {
-          dispatch(logoutThunk());
-          navigate("/login");
-        }}
-      >
-        Logout
-      </button>
+        <div className="col-4" onClick={handleFollowingClick}>
+          <label>Following: {user.following.length}</label>
+        </div>
+        <div className="col-4" onClick={handleLikesClick}>
+          <label>Likes: {user.likes.length}</label>
+        </div>
+      </div>
     </div>
   );
 }
-export default ProfileScreen;
-
+export default ProfileScreenPublic;
 // make data of user so that email/phone/followers/following/likes are initialized
 // will we be able to search by user?

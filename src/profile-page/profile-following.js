@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updateUserThunk } from "../services/users-thunk";
+import { getOtherUserByIDThunk, updateUserThunk } from "../services/users-thunk";
 
 function ProfileFollowing() {
   const dispatch = useDispatch();
@@ -12,7 +12,7 @@ function ProfileFollowing() {
     );
     const updatedUser = { ...currentUser, followings: updatedFollowings };
     dispatch(updateUserThunk(updatedUser));
-    const followedUser = await dispatch(getUserByIDThunk(followingID));
+    const followedUser = await dispatch(getOtherUserByIDThunk(followingID));
     const updatedFollowedUserFollowers = followedUser.followers.filter(
       (follower) => follower.id !== currentUser.id
     );

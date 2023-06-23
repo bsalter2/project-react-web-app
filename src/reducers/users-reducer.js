@@ -5,6 +5,7 @@ import {
   createUserThunk,
   deleteUserThunk,
   updateUserThunk,
+  getOtherUserByIDThunk
 } from "../services/users-thunk";
 
 const initialState = {
@@ -12,6 +13,7 @@ const initialState = {
   error: null,
   loading: false,
   currentUser: null,
+  otherUser: null,
 };
 
 const usersSlice = createSlice({
@@ -45,6 +47,21 @@ const usersSlice = createSlice({
     },
     [getUserByIDThunk.pending]: (state, action) => {
       state.currentUser = null;
+      state.loading = true;
+      state.error = null;
+    },
+    [getOtherUserByIDThunk.fulfilled]: (state, action) => {
+      state.otherUser = action.payload;
+      state.loading = false;
+      state.error = null;
+    },
+    [getOtherUserByIDThunk.rejected]: (state, action) => {
+      state.otherUser = null;
+      state.error = action.error;
+      state.loading = false;
+    },
+    [getOtherUserByIDThunk.pending]: (state, action) => {
+      state.otherUser = null;
       state.loading = true;
       state.error = null;
     },
