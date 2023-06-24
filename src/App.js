@@ -104,11 +104,9 @@ function App() {
                   />
                 </Routes>
               </div>
-              {!SearchScreen ? null : (
-                <div className="col-xxl-3 col-xl-3 col-lg-2 d-none d-lg-block">
-                  <TrendingSidebar />
-                </div>
-              )}
+              <div className="col-xxl-3 col-xl-3 col-lg-2 d-none d-lg-block">
+                <TrendingSidebar />
+              </div>
             </div>
           </UsersContextLoader>
         </Provider>
