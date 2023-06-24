@@ -8,6 +8,7 @@ import {
   FaUser,
   FaSignInAlt,
   FaUserPlus,
+  FaUserShield,
 } from "react-icons/fa";
 
 const SidebarContainer = styled.div`
@@ -82,6 +83,15 @@ const NavigationSidebar = () => {
           register
         </StyledLink>
       )}
+      {/* {currentUser && currentUser.isAdmin && ( */}
+      {!currentUser && (
+        <StyledLink to="/admin" isActive={active === "admin"}>
+          <StyledIcon>
+            <FaUserShield />  
+          </StyledIcon>
+          admin
+        </StyledLink>
+)}
     </SidebarContainer>
   );
 };

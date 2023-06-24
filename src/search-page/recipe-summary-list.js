@@ -17,21 +17,24 @@ const LoadingListItem = styled.li`
   color: white;
 `;
 
-function RecipeSummaryList() {
+function RecipeSummaryList({ limit }) {
+  const { recipes, loading } = useSelector(state => state.recipes);
+  const randomRecipes = [...recipes].sort(() => .5 - Math.random()).slice(0, limit);
 
-    const { recipes, loading } = useSelector(state => state.recipes);
-
-    return (
-        <StyledList>
-            {loading ?
-                <LoadingListItem>
-                    Loading...
-                </LoadingListItem> : recipes.map(recipe =>
-                    <RecipeSummaryItem
-                        key={recipe.id} recipe={recipe} />)
-            }
-        </StyledList>
-    )
+  return (
+    <StyledList>
+      {loading ? (
+        <LoadingListItem>
+          Loading...
+        </LoadingListItem>
+      ) : (
+        randomRecipes.map(recipe => (
+          <RecipeSummaryItem key={recipe.id} recipe={recipe} />
+        ))
+      )}
+    </StyledList>
+  );
 }
 
 export default RecipeSummaryList;
+

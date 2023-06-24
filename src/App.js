@@ -23,6 +23,7 @@ import ProfileScreen from "./profile-page/profile-self";
 import ProfileLikes from "./profile-page/profile-likes";
 import ProfileFollowers from "./profile-page/profile-followers";
 import ProfileFollowing from "./profile-page/profile-following";
+import Admin from "./admin-page/admin";
 
 const AppContainer = styled.div`
   background-color: #15202b;
@@ -94,11 +95,20 @@ function App() {
                       // </ProtectedRoute>
                     }
                   />
+                
+                  <Route 
+                    path="/admin" 
+                    
+                    element={<Admin />} 
+                    
+                  />
                 </Routes>
               </div>
-              <div className="col-xxl-3 col-xl-3 col-lg-2 d-none d-lg-block">
-                <TrendingSidebar />
-              </div>
+              {!SearchScreen ? null : (
+                <div className="col-xxl-3 col-xl-3 col-lg-2 d-none d-lg-block">
+                  <TrendingSidebar />
+                </div>
+              )}
             </div>
           </UsersContextLoader>
         </Provider>
