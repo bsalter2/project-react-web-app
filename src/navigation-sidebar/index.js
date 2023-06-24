@@ -83,8 +83,7 @@ const NavigationSidebar = () => {
           register
         </StyledLink>
       )}
-      {/* {currentUser && currentUser.isAdmin && ( */}
-      {!currentUser && (
+      {currentUser && currentUser.role==="admin" && (
         <StyledLink to="/admin" isActive={active === "admin"}>
           <StyledIcon>
             <FaUserShield />

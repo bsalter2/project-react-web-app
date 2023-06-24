@@ -40,7 +40,6 @@ function Admin() {
             <UserTitle>{user.username}</UserTitle>
             <UserDetails>First Name: {user.firstName}</UserDetails>
             <UserDetails>Last Name: {user.lastName}</UserDetails>
-            {/* <UserDetails>Email: {user.email}</UserDetails> */}
           </UserItem>
         ))}
       </div>

@@ -1,14 +1,10 @@
 import React from "react";
-import RecipeSummaryItem from './recipe-summary-item';
-import { useSelector } from "react-redux";
-import styled from 'styled-components';
+import styled from "styled-components";
+import { Link } from "react-router-dom";
 
-const StyledList = styled.ul`
-  list-style: none;
-  padding: 0;
-`;
-
-const LoadingListItem = styled.li`
+const ListItem = styled.li`
+  display: flex;
+  align-items: center;
   border: 2px solid white;
   border-radius: 10px;
   padding: 15px;
@@ -17,23 +13,54 @@ const LoadingListItem = styled.li`
   color: white;
 `;
 
-function RecipeSummaryList({ limit }) {
-  const { recipes, loading } = useSelector(state => state.recipes);
-  const randomRecipes = [...recipes].sort(() => .5 - Math.random()).slice(0, limit);
+const RecipeLink = styled(Link)`
+  text-decoration: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  &:hover {
+    color: #1da1f2;
+  }
+`;
 
+const RecipeTitle = styled.div`
+  font-size: 18px;
+  font-weight: 700;
+  flex-grow: 1;
+`;
+
+const RecipeImage = styled.img`
+  height: 80px;
+  border-radius: 10px;
+`;
+
+const RecipeSummaryItem = ({
+  recipe = {
+    id: 1,
+    topic: "Rosemary Foccia",
+    tags: ["bread", "italian"],
+    directions: ["1...", "2...", "3..."],
+    image: "rosemary_foccacia.jpeg",
+    ingredients: ["flour", "oil", "rosemary", "sugar", "salt", "yeast"],
+    difficulty: 4,
+    rating: 7,
+    prep_time: 5,
+    cook_time: 40,
+    serving: "7-10",
+  },
+}) => {
   return (
-    <StyledList>
-      {loading ? (
-        <LoadingListItem>
-          Loading...
-        </LoadingListItem>
-      ) : (
-        randomRecipes.map(recipe => (
-          <RecipeSummaryItem key={recipe.id} recipe={recipe} />
-        ))
-      )}
-    </StyledList>
+    <ListItem>
+      <RecipeLink to={`/details/${recipe.id}`}>
+        <RecipeTitle>{recipe.title}</RecipeTitle>
+        <RecipeImage
+          src={recipe.image}
+          alt={"./images/alt_recipe_image.jpeg"}
+        />
+      </RecipeLink>
+    </ListItem>
   );
-}
+};
 
-export default RecipeSummaryList;
+export default RecipeSummaryItem;

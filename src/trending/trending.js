@@ -81,7 +81,6 @@ const UserItem = ({ user }) => (
 
 const TrendingSidebar = () => {
   const dispatch = useDispatch();
-  const { users, currentUser } = useSelector((state) => state.users);
 
   useEffect(() => {
     dispatch(getAllUsersThunk());
@@ -90,15 +89,9 @@ const TrendingSidebar = () => {
 
   return (
     <TrendingSidebarContainer>
-      <TrendingTitle>
-        {currentUser ? "All Users" : "Recommended Recipes"}
-      </TrendingTitle>
+      <TrendingTitle>Recommended Recipes</TrendingTitle>
       <TrendingList>
-        {currentUser ? (
-          users.map((user) => <UserItem key={user.id} user={user} />)
-        ) : (
-          <RecipeSummaryList limit={3} />
-        )}
+        <RecipeSummaryList limit={3} />
       </TrendingList>
     </TrendingSidebarContainer>
   );

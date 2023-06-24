@@ -25,6 +25,7 @@ import ProfileFollowers from "./profile-page/profile-followers";
 import ProfileFollowing from "./profile-page/profile-following";
 import ProtectedRouteLoggedIn from "./login-page/protected-route-logged-in";
 import Admin from "./admin-page/admin";
+import AdminProtectedRoute from "./admin-page/admin-protected-route";
 
 const AppContainer = styled.div`
   background-color: #15202b;
@@ -110,7 +111,14 @@ function App() {
                       </ProtectedRoute>
                     }
                   />
-                  <Route path="/admin" element={<Admin />} />
+                  <Route
+                    path="/admin"
+                    element={
+                      <AdminProtectedRoute>
+                        <Admin />
+                      </AdminProtectedRoute>
+                    }
+                  />
                 </Routes>
               </div>
               {!SearchScreen ? null : (
