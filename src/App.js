@@ -23,6 +23,7 @@ import ProfileScreen from "./profile-page/profile-self";
 import ProfileLikes from "./profile-page/profile-likes";
 import ProfileFollowers from "./profile-page/profile-followers";
 import ProfileFollowing from "./profile-page/profile-following";
+import ProtectedRouteLoggedIn from "./login-page/protected-route-logged-in";
 
 const AppContainer = styled.div`
   background-color: #15202b;
@@ -57,41 +58,55 @@ function App() {
                   <Route path="/search/:sc" element={<SearchScreen />} />
                   <Route path="/details/:did" element={<DetailsScreen />} />
                   <Route
-                    path="/profile/:uid"
+                    path="/profile/:username"
                     element={<ProfileScreenPublic />}
                   />
                   <Route
-                    path="/profile/"
+                    path="/profile"
                     element={
-                      // <ProtectedRoute>
-                      <ProfileScreen />
-                      // </ProtectedRoute>
+                      <ProtectedRoute>
+                        <ProfileScreen />
+                      </ProtectedRoute>
                     }
                   />
-                  <Route path="/login" element={<LoginScreen />} />
-                  <Route path="/register" element={<RegisterScreen />} />
+                  <Route
+                    path="/login"
+                    element={
+                      <ProtectedRouteLoggedIn>
+                        <LoginScreen />
+                      </ProtectedRouteLoggedIn> 
+                    }
+                  />
+                  <Route
+                    path="/register"
+                    element={
+                      <ProtectedRouteLoggedIn>
+                        <RegisterScreen />
+                      </ProtectedRouteLoggedIn>
+                    }
+                  />
                   <Route
                     path="/profile/likes"
                     element={
-                      // <ProtectedRoute>
-                      <ProfileLikes />
-                      // </ProtectedRoute>
+                      <ProtectedRoute>
+                        <ProfileLikes />
+                      </ProtectedRoute>
                     }
                   />
                   <Route
                     path="/profile/followers"
                     element={
-                      // <ProtectedRoute>
-                      <ProfileFollowers />
-                      // </ProtectedRoute>
+                      <ProtectedRoute>
+                        <ProfileFollowers />
+                      </ProtectedRoute>
                     }
                   />
                   <Route
                     path="/profile/following"
                     element={
-                      // <ProtectedRoute>
-                      <ProfileFollowing />
-                      // </ProtectedRoute>
+                      <ProtectedRoute>
+                        <ProfileFollowing />
+                      </ProtectedRoute>
                     }
                   />
                 </Routes>

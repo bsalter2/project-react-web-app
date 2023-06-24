@@ -25,6 +25,14 @@ export const getOtherUserByIDThunk = createAsyncThunk(
   }
 );
 
+export const getUserByUsernameThunk = createAsyncThunk(
+  "users/getUserByUsername",
+  async (username) => {
+    const user = await userService.getUserByUsername(username);
+    return user;
+  }
+);
+
 export const createUserThunk = createAsyncThunk(
   "users/createUser",
   async (user) => {
@@ -45,7 +53,7 @@ export const deleteUserThunk = createAsyncThunk(
 export const updateUserThunk = createAsyncThunk(
   "users/updateUser",
   async (user) => {
-    const status = await userService.updateUser(user._id, user);
-    return user;
+    const updatedUser = await userService.updateUser(user._id, user);
+    return updatedUser;
   }
 );
