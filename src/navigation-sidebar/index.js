@@ -83,15 +83,14 @@ const NavigationSidebar = () => {
           register
         </StyledLink>
       )}
-      {/* {currentUser && currentUser.isAdmin && ( */}
-      {!currentUser && (
-        <StyledLink to="/admin" isActive={active === "admin"}>
-          <StyledIcon>
-            <FaUserShield />  
-          </StyledIcon>
-          admin
-        </StyledLink>
-)}
+      {currentUser && currentUser.role === "admin" && (
+              <StyledLink to="/admin" isActive={active === "admin"}>
+                <StyledIcon>
+                  <FaUserShield />  
+                </StyledIcon>
+                admin
+              </StyledLink>
+            )}
     </SidebarContainer>
   );
 };
