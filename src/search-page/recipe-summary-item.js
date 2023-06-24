@@ -1,6 +1,6 @@
-import React from 'react'
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import React from "react";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const ListItem = styled.li`
   display: flex;
@@ -20,7 +20,7 @@ const RecipeLink = styled(Link)`
   align-items: center;
   width: 100%;
   &:hover {
-    color: #1DA1F2;
+    color: #1da1f2;
   }
 `;
 
@@ -35,31 +35,32 @@ const RecipeImage = styled.img`
   border-radius: 10px;
 `;
 
-const RecipeSummaryItem = (
-  {
-    recipe = {
-      "id": 1,
-      "topic": "Rosemary Foccia",
-      "tags": ["bread", "italian"],
-      "directions": ["1...", "2...", "3..."],
-      "image": "rosemary_foccacia.jpeg",
-      "ingredients": ["flour", "oil", "rosemary", "sugar", "salt", "yeast"],
-      "difficulty": 4,
-      "rating": 7,
-      "prep_time": 5,
-      "cook_time": 40,
-      "serving": "7-10"
-    }
-  }
-) => {
+const RecipeSummaryItem = ({
+  recipe = {
+    id: 1,
+    topic: "Rosemary Foccia",
+    tags: ["bread", "italian"],
+    directions: ["1...", "2...", "3..."],
+    image: "rosemary_foccacia.jpeg",
+    ingredients: ["flour", "oil", "rosemary", "sugar", "salt", "yeast"],
+    difficulty: 4,
+    rating: 7,
+    prep_time: 5,
+    cook_time: 40,
+    serving: "7-10",
+  },
+}) => {
   return (
-      <ListItem>
-        <RecipeLink to={`/details/${recipe.id}`} >
-          <RecipeTitle>{recipe.title}</RecipeTitle>
-          <RecipeImage src={recipe.image} alt={"./images/alt_recipe_image.jpeg"} />
-        </RecipeLink>
-      </ListItem>
-  )
-}
+    <ListItem>
+      <RecipeLink to={`/details/${recipe.id}`}>
+        <RecipeTitle>{recipe.title}</RecipeTitle>
+        <RecipeImage
+          src={recipe.image}
+          alt={"./images/alt_recipe_image.jpeg"}
+        />
+      </RecipeLink>
+    </ListItem>
+  );
+};
 
-export default RecipeSummaryItem
+export default RecipeSummaryItem;

@@ -1,8 +1,11 @@
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import styled from 'styled-components';
-import { FaFire } from 'react-icons/fa';
-
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllUsersThunk } from "../services/users-thunk";
+import { findAllRecipesThunk } from "../services/recipes-thunk";
+import styled from "styled-components";
+import { FaUser } from "react-icons/fa";
+import RecipeSummaryList from "../search-page/recipe-summary-list";
 const TrendingSidebarContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -10,14 +13,13 @@ const TrendingSidebarContainer = styled.div`
   padding: 0;
   background-color: #15202b;
   color: white;
-  border: 2px solid white;
   margin-top: 10px;
   border-radius: 10px;
 `;
 
 const StyledLink = styled(Link)`
   text-decoration: none;
-  color: ${props => (props.isActive ? '#1DA1F2' : 'white')};
+  color: ${(props) => (props.isActive ? "#1DA1F2" : "white")};
   display: flex;
   align-items: center;
   padding: 15px;
@@ -25,7 +27,7 @@ const StyledLink = styled(Link)`
   font-weight: 700;
   border-bottom: 1px solid white;
   &:hover {
-    background-color: #1DA1F2;
+    background-color: #1da1f2;
   }
 `;
 
@@ -60,33 +62,36 @@ const TrendingIcon = styled.span`
   margin-right: 10px;
   font-size: 18px;
 `;
+const UserTitle = styled.h5`
+  font-size: 18px;
+  font-weight: 700;
+  flex-grow: 1;
+`;
 
-const TrendingRecipe = ({ name }) => (
+const UserItem = ({ user }) => (
   <TrendingItem>
     <TrendingRecipeItem>
       <TrendingIcon>
-        <FaFire />
+        <FaUser />
       </TrendingIcon>
-      {name}
+      <UserTitle>{user.username}</UserTitle>
     </TrendingRecipeItem>
   </TrendingItem>
 );
 
 const TrendingSidebar = () => {
-  const { pathname } = useLocation();
-  const [ignore, active] = pathname.split('/');
+  const dispatch = useDispatch();
 
-  const trendingRecipes = ['Recipe 1', 'Recipe 2', 'Recipe 3', 'Recipe 4']; // Replace with your actual trending recipes data
+  useEffect(() => {
+    dispatch(getAllUsersThunk());
+    dispatch(findAllRecipesThunk());
+  }, [dispatch]);
 
   return (
     <TrendingSidebarContainer>
-      <TrendingTitle>Trending Recipes</TrendingTitle>
+      <TrendingTitle>Recommended Recipes</TrendingTitle>
       <TrendingList>
-        {trendingRecipes.map((recipe, index) => (
-          <StyledLink to={`/${recipe}`} isActive={active === recipe} key={index}>
-            <TrendingRecipe name={recipe} />
-          </StyledLink>
-        ))}
+        <RecipeSummaryList limit={3} />
       </TrendingList>
     </TrendingSidebarContainer>
   );
