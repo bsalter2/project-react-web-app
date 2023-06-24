@@ -54,7 +54,7 @@ function ProfileScreenPublic() {
       (following) => following !== user._id
     );
     const updatedUser = { ...profile, followings: updatedFollowings };
-    setProfile(updatedUser)
+    setProfile(updatedUser);
     await dispatch(updateUserThunk(updatedUser));
     const updatedFollowedUserFollowers = user.followers.filter(
       (follower) => follower !== profile._id
@@ -110,6 +110,10 @@ function ProfileScreenPublic() {
             <div className="col-4 d-flex justify-content-center">
               <label>Likes: {user.likes ? user.likes.length : 0}</label>
             </div>
+          </div>
+          <br></br>
+          <div className="row">
+            {user.role === "influencer" && (<div>{user.bio}</div>)}
           </div>
         </div>
       )}

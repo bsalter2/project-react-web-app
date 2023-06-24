@@ -119,7 +119,9 @@ function ProfileScreen() {
                   profile.followers.length !== 0 ? handleFollowersClick : null
                 }
               >
-                <label>Followers: {profile.followers ? profile.followers.length : 0}</label>
+                <label>
+                  Followers: {profile.followers ? profile.followers.length : 0}
+                </label>
               </div>
               <div
                 className="col-4 d-flex justify-content-center"
@@ -127,7 +129,10 @@ function ProfileScreen() {
                   profile.followings.length !== 0 ? handleFollowingClick : null
                 }
               >
-                <label>Following: {profile.followings ? profile.followings.length : 0}</label>
+                <label>
+                  Following:{" "}
+                  {profile.followings ? profile.followings.length : 0}
+                </label>
               </div>
               <div
                 className="col-4 d-flex justify-content-center"
@@ -136,6 +141,26 @@ function ProfileScreen() {
                 <label>Likes: {profile.likes ? profile.likes.length : 0}</label>
               </div>
             </div>
+            <br></br>
+            {profile.role === "influencer" && (
+              <div className="row">
+                <label className="col-6">Bio</label>
+                <div className="row">
+                  <input
+                    className="col-12"
+                    type="text"
+                    value={profile.bio}
+                    onChange={(event) => {
+                      const newProfile = {
+                        ...profile,
+                        bio: event.target.value,
+                      };
+                      setProfile(newProfile);
+                    }}
+                  />
+                </div>
+              </div>
+            )}
             <br></br>
             <div className="row">
               <button
