@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import {
@@ -70,7 +69,7 @@ function ProfileScreenPublic() {
 
   return (
     <Text>
-      {!user && <div>"Failed"</div>}
+      {!user && <div>User Does Not Exist</div>}
       {user && (
         <div className="container">
           {profile && profile.username !== user.username && (
