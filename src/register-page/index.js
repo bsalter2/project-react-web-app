@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { registerThunk } from "../services/auth-thunk";
 import { useNavigate } from "react-router";
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const Register = styled.h2`
   margin-bottom: 10px;
@@ -39,8 +39,16 @@ const RegisterScreen = () => {
         value={user.password}
         onChange={(e) => setUser({ ...user, password: e.target.value })}
       />
+      <select
+        value={user.role}
+        onChange={(e) => setUser({ ...user, role: e.target.value })}
+        className="form-control"
+      >
+        <option value="user">User</option>
+        <option value="influencer">Influencer</option>
+      </select>
       <button onClick={handleRegister} className="btn btn-primary">
-        Login
+        Register
       </button>
     </div>
   );

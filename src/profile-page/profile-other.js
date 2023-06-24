@@ -1,49 +1,120 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 import { useParams } from "react-router-dom";
-import { getOtherUserByIDThunk } from "../services/users-thunk";
+import styled from "styled-components";
+import {
+  getUserByUsernameThunk,
+  updateUserThunk,
+  getOtherUserByIDThunk,
+} from "../services/users-thunk";
+import { profileThunk } from "../services/auth-thunk";
+
+const Text = styled.p`
+  text-align: left;
+  color: white;
+  font-family: "Roboto", sans-serif;
+`;
 
 function ProfileScreenPublic() {
+  const { currentUser } = useSelector((state) => state.currentUser);
+  const [profile, setProfile] = useState(currentUser);
   const dispatch = useDispatch();
   const params = useParams();
-  const id = params.uid;
+  const username = params.username;
   const [user, setUser] = useState(null);
   useEffect(() => {
     const fetchUser = async () => {
-      const userData = await dispatch(getOtherUserByIDThunk(id));
-      setUser(userData);
+      const { payload } = await dispatch(getUserByUsernameThunk(username));
+      setUser(payload);
     };
+    const loadProfile = async () => {
+      const { payload } = await dispatch(profileThunk());
+      setProfile(payload);
+    };
+    loadProfile();
     fetchUser();
-  }, [dispatch, id]);
+  }, [dispatch, params, username]);
 
-  if (!user) {
-    return <div>Loading...</div>;
-  }
+  const handleFollow = async () => {
+    const updatedFollowings = [...profile.followings, user._id];
+    const updatedUser = { ...profile, followings: updatedFollowings };
+    setProfile(updatedUser);
+    await dispatch(updateUserThunk(updatedUser));
+    const updatedFollowedUserFollowers = [...user.followers, profile._id];
+    const updatedFollowedUser = {
+      ...user,
+      followers: updatedFollowedUserFollowers,
+    };
+    setUser(updatedFollowedUser);
+    await dispatch(updateUserThunk(updatedFollowedUser));
+  };
+
+  const handleUnfollow = async () => {
+    const updatedFollowings = profile.followings.filter(
+      (following) => following !== user._id
+    );
+    const updatedUser = { ...profile, followings: updatedFollowings };
+    setProfile(updatedUser)
+    await dispatch(updateUserThunk(updatedUser));
+    const updatedFollowedUserFollowers = user.followers.filter(
+      (follower) => follower !== profile._id
+    );
+    const updatedFollowedUser = {
+      ...user,
+      followers: updatedFollowedUserFollowers,
+    };
+    setUser(updatedFollowedUser);
+    await dispatch(updateUserThunk(updatedFollowedUser));
+  };
 
   return (
-    <div className="container">
-      <div className="row">
-        <label>Name</label>
-        <label>
-          {user.firstName} {user.lastName}
-        </label>
-        <label>Username</label>
-        <label>{user.userName}</label>
-      </div>
-      <div className="row">
-        <div className="col-4" onClick={handleFollowersClick}>
-          <label>Followers: {user.followers.length}</label>
+    <Text>
+      {!user && <div>"Failed"</div>}
+      {user && (
+        <div className="container">
+          {profile && profile.username !== user.username && (
+            <div className="row">
+              {!profile.followings.some((u) => u === user._id) && (
+                <button className="col-4" onClick={handleFollow}>
+                  Follow
+                </button>
+              )}
+              {profile.followings.some((u) => u === user._id) && (
+                <button className="col-4" onClick={handleUnfollow}>
+                  Unfollow
+                </button>
+              )}
+            </div>
+          )}
+
+          <div className="row">
+            <label className="col-5">Name</label>
+            <label className="col-7">
+              {user.firstName} {user.lastName}
+            </label>
+            <label className="col-5">Username</label>
+            <label className="col-7">{user.username}</label>
+          </div>
+          <br></br>
+          <div className="row">
+            <div className="col-4 d-flex justify-content-center">
+              <label>
+                Followers: {user.followers ? user.followers.length : 0}
+              </label>
+            </div>
+            <div className="col-4 d-flex justify-content-center">
+              <label>
+                Following: {user.followings ? user.followings.length : 0}
+              </label>
+            </div>
+            <div className="col-4 d-flex justify-content-center">
+              <label>Likes: {user.likes ? user.likes.length : 0}</label>
+            </div>
+          </div>
         </div>
-        <div className="col-4" onClick={handleFollowingClick}>
-          <label>Following: {user.following.length}</label>
-        </div>
-        <div className="col-4" onClick={handleLikesClick}>
-          <label>Likes: {user.likes.length}</label>
-        </div>
-      </div>
-    </div>
+      )}
+    </Text>
   );
 }
 export default ProfileScreenPublic;
-// make data of user so that email/phone/followers/following/likes are initialized
-// will we be able to search by user?
