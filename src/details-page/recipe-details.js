@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect  } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { updateRecipeThunk } from "../services/recipes-thunk";
 import { updateUserThunk } from "../services/users-thunk";
+import { profileThunk } from "../services/auth-thunk";
+
 
 const Container = styled.div`
   position: relative;
@@ -84,16 +86,20 @@ const RecipeItem = ({ recipe }) => {
   const [_recipe, setRecipe] = useState(recipe);
   const { currentUser } = useSelector((state) => state.currentUser);
   const [profile, setProfile] = useState(currentUser);
+  const [isLiked, setLike] = useState(false);
+
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const protectedMethod = () => {
     if (profile) {
-      const isLiked = profile.likes.some(
-        (id) => id.recipeId === recipe.recipeId
-      );
-      return isLiked;
+      for (const id of profile.likes) {
+        if (id == recipe.recipeId) {
+          return true
+        }
+      }
+      return false
     } else {
       return false;
     }
@@ -104,8 +110,7 @@ const RecipeItem = ({ recipe }) => {
     let updatedUser = {};
     let pageRecipe = {};
 
-    const isLiked = profile.likes.some((id) => id.recipeId === recipe.recipeId);
-
+    console.log(isLiked)
     if (isLiked) {
       updatedRecipe = {
         name: _recipe.title,
@@ -113,15 +118,18 @@ const RecipeItem = ({ recipe }) => {
         likes: _recipe.likes - 1,
       };
       pageRecipe = { ..._recipe, likes: _recipe.likes - 1 };
-      const newLikes = profile.likes.filter(
-        (id) => id.recipeId !== recipe.recipeId
-      );
+      const newLikes = []
+      for (const id of profile.likes) {
+          if (id !== _recipe.recipeId) {
+            newLikes.push(id)
+          }
+      }
       updatedUser = {
         ...profile,
         likes: newLikes,
       };
-      await dispatch(updateRecipeThunk(updatedRecipe));
-      await dispatch(updateUserThunk(updatedUser));
+      dispatch(updateRecipeThunk(updatedRecipe));
+      dispatch(updateUserThunk(updatedUser));
     } else {
       updatedRecipe = {
         name: _recipe.title,
@@ -131,14 +139,27 @@ const RecipeItem = ({ recipe }) => {
       pageRecipe = { ..._recipe, likes: _recipe.likes + 1 };
       updatedUser = {
         ...profile,
-        likes: [...profile.likes, _recipe],
+        likes: [...profile.likes, _recipe.recipeId],
       };
-      await dispatch(updateRecipeThunk(updatedRecipe));
-      await dispatch(updateUserThunk(updatedUser));
+      dispatch(updateRecipeThunk(updatedRecipe));
+      dispatch(updateUserThunk(updatedUser));
     }
-    setRecipe(pageRecipe);
     setProfile(updatedUser);
+    setLike(!isLiked)
+    setRecipe(pageRecipe);
   };
+
+  useEffect(() => {
+    const loadProfile = async () => {
+      const { payload } = await dispatch(profileThunk());
+      setProfile(payload);
+      if (profile) {
+        const result = protectedMethod()
+        setLike(result)
+      }
+    };
+    loadProfile();
+  }, [dispatch]);
 
   const goBack = () => {
     navigate(-1); // Go back to the previous page
@@ -149,7 +170,7 @@ const RecipeItem = ({ recipe }) => {
       <RecipeContainer>
         {currentUser && (
           <Likes>
-            {protectedMethod() ? (
+            {isLiked ? (
               <FontAwesomeIcon
                 icon={faHeart}
                 size="lg"

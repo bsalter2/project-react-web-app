@@ -41,6 +41,7 @@ function ProfileScreen() {
     };
     loadProfile();
   }, [dispatch]);
+  
   return (
     <Text>
       <div>
