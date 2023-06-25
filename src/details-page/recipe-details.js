@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from "react-redux";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHeart } from '@fortawesome/free-solid-svg-icons'
+import { updateRecipeThunk } from "../services/recipes-thunk";
+import { updateUserThunk } from "../services/users-thunk";
 
 const Container = styled.div`
   position: relative;
@@ -33,6 +38,12 @@ const BackButton = styled.button`
   &:hover {
     background-color: #1DA1F2;
   }
+`;
+
+const Likes = styled.div`
+  position: absolute;
+  top: 10px;
+  right: 10px;
 `;
 
 const RecipeImage = styled.img`
@@ -72,6 +83,8 @@ const RecipeDetail = styled.div`
 const RecipeItem = ({
   recipe = [{
     "_id": 1,
+    "likes": 0,
+    "recipeId": 123,
     "title": "Rosemary Foccia",
     "tags": ["bread", "italian"],
     "analyzedInstructions": [
@@ -99,7 +112,45 @@ const RecipeItem = ({
     ]
   }]
 }) => {
+  const [_recipe, setRecipe] = useState(recipe);
+  const { currentUser } = useSelector(state => state.currentUser)
+
+  const [profile, setProfile] = useState(currentUser);
+
+  const isLiked = profile.likes.some((id) =>
+    id.recipeId === recipe.recipeId
+  )
+  
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleLike = async () => {
+    let updatedRecipe = {}
+    let updatedUser = {}
+    let pageRecipe = {}
+
+    if (isLiked) {
+      updatedRecipe = { name: _recipe.title, recipeId: _recipe.recipeId, likes: _recipe.likes - 1 }
+      pageRecipe = { ..._recipe, likes: _recipe.likes - 1 }
+      const newLikes = profile.likes.filter((id) => id.recipeId !== recipe.recipeId)
+      updatedUser = {
+        ...profile, likes: newLikes
+      };
+      await dispatch(updateRecipeThunk(updatedRecipe))
+      dispatch(updateUserThunk(updatedUser));
+
+    } else {
+      updatedRecipe = { name: _recipe.title, recipeId: _recipe.recipeId, likes: _recipe.likes + 1 }
+      pageRecipe = { ..._recipe, likes: _recipe.likes + 1 }
+      updatedUser = {
+        ...profile, likes: [...profile.likes, { recipeId: _recipe.recipeId }]
+      };
+      await dispatch(updateRecipeThunk(updatedRecipe))
+      dispatch(updateUserThunk(updatedUser));
+    }
+    setRecipe(pageRecipe)
+    setProfile(updatedUser)
+  }
 
   const goBack = () => {
     navigate(-1); // Go back to the previous page
@@ -108,6 +159,16 @@ const RecipeItem = ({
   return (
     <Container>
       <RecipeContainer>
+        {currentUser &&
+          <Likes>
+            {
+              isLiked 
+              ? <FontAwesomeIcon icon={faHeart} size="lg" onClick={handleLike} style={{color: "#f44343"}}/>
+              : <FontAwesomeIcon icon={faHeart} size="lg" onClick={handleLike} />
+            }
+            &nbsp;
+            {_recipe.likes}
+          </Likes>}
         <BackButton onClick={goBack}>Back</BackButton>
         <RecipeImage src={recipe.image} alt="" />
         <RecipeTitle>{recipe.title}</RecipeTitle>

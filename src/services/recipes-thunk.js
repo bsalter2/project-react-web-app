@@ -15,3 +15,11 @@ export const findRecipesByStringThunk = createAsyncThunk(
     "recipes/findRecipesByString",
     async (string) => await service.findRecipesByString(string)
 );
+
+export const updateRecipeThunk = createAsyncThunk(
+    "recipes/updateRecipe",
+    async (recipe) => {
+      const status = await service.updateRecipe(recipe.recipeId, recipe);
+      return recipe;
+    }
+  );
