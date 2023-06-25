@@ -117,17 +117,30 @@ const RecipeItem = ({
 
   const [profile, setProfile] = useState(currentUser);
 
-  const isLiked = profile.likes.some((id) =>
-    id.recipeId === recipe.recipeId
-  )
-  
+  console.log(profile)
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const protectedMethod = () => {
+    if (profile) {
+      const isLiked = profile.likes.some((id) =>
+        id.recipeId === recipe.recipeId
+      )
+      return isLiked
+    } else {
+      return false
+    }
+  }
 
   const handleLike = async () => {
     let updatedRecipe = {}
     let updatedUser = {}
     let pageRecipe = {}
+
+    const isLiked = profile.likes.some((id) =>
+      id.recipeId === recipe.recipeId
+    )
 
     if (isLiked) {
       updatedRecipe = { name: _recipe.title, recipeId: _recipe.recipeId, likes: _recipe.likes - 1 }
@@ -162,9 +175,9 @@ const RecipeItem = ({
         {currentUser &&
           <Likes>
             {
-              isLiked 
-              ? <FontAwesomeIcon icon={faHeart} size="lg" onClick={handleLike} style={{color: "#f44343"}}/>
-              : <FontAwesomeIcon icon={faHeart} size="lg" onClick={handleLike} />
+              protectedMethod()
+                ? <FontAwesomeIcon icon={faHeart} size="lg" onClick={handleLike} style={{ color: "#f44343" }} />
+                : <FontAwesomeIcon icon={faHeart} size="lg" onClick={handleLike} />
             }
             &nbsp;
             {_recipe.likes}
