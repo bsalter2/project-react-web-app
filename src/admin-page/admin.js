@@ -56,9 +56,9 @@ function Admin() {
         {users.map((user) => (
           <UserItem key={user.id}>
             <UserTitle>{user.username}</UserTitle>
-            <UserDetails>First Name: {user.firstName}</UserDetails>
-            <UserDetails>Last Name: {user.lastName}</UserDetails>
-            <DeleteButton onClick={() => handleDelete(user.id)}>Delete</DeleteButton>
+            <UserDetails>First Name: {user.firstName + ' '} </UserDetails>
+            <UserDetails>Last Name: {user.lastName} </UserDetails>
+            <DeleteButton onClick={() => handleDelete(user._id)}>Delete</DeleteButton>
           </UserItem>
         ))}
       </div>
