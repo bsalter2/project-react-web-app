@@ -35,21 +35,7 @@ const RecipeImage = styled.img`
   border-radius: 10px;
 `;
 
-const RecipeSummaryItem = ({
-  recipe = {
-    id: 1,
-    topic: "Rosemary Foccia",
-    tags: ["bread", "italian"],
-    directions: ["1...", "2...", "3..."],
-    image: "rosemary_foccacia.jpeg",
-    ingredients: ["flour", "oil", "rosemary", "sugar", "salt", "yeast"],
-    difficulty: 4,
-    rating: 7,
-    prep_time: 5,
-    cook_time: 40,
-    serving: "7-10",
-  },
-}) => {
+const RecipeSummaryItem = ({ recipe }) => {
   return (
     <ListItem>
       <RecipeLink to={`/details/${recipe.id}`}>

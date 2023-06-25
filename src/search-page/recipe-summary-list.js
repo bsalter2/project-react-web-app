@@ -29,7 +29,7 @@ function RecipeSummaryList({ limit }) {
         <LoadingListItem>Loading...</LoadingListItem>
       ) : (
         randomRecipes.map((recipe) => (
-          <RecipeSummaryItem key={recipe.id} recipe={recipe} />
+          <RecipeSummaryItem key={recipe._id} recipe={recipe} />
         ))
       )}
     </StyledList>
