@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllUsersThunk } from "../services/users-thunk";
+import { getAllUsersThunk, deleteUserThunk } from "../services/users-thunk";
 import styled from "styled-components";
 
 const UserItem = styled.div`
@@ -24,6 +24,21 @@ const UserDetails = styled.p`
   margin-bottom: 0.5rem;
 `;
 
+
+const DeleteButton = styled.button`
+  padding: 5px 10px;
+  margin-left: 10px;
+  color: #fff;
+  background-color: #ff6347;  
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #ff0000; 
+  }
+`;
+
 function Admin() {
   const dispatch = useDispatch();
   const { users } = useSelector((state) => state.users);
@@ -32,6 +47,9 @@ function Admin() {
     dispatch(getAllUsersThunk());
   }, [dispatch]);
 
+  const handleDelete = (id) => {
+    dispatch(deleteUserThunk(id));
+  };
   return (
     <div className="container">
       <div className="row">
@@ -40,6 +58,7 @@ function Admin() {
             <UserTitle>{user.username}</UserTitle>
             <UserDetails>First Name: {user.firstName}</UserDetails>
             <UserDetails>Last Name: {user.lastName}</UserDetails>
+            <DeleteButton onClick={() => handleDelete(user.id)}>Delete</DeleteButton>
           </UserItem>
         ))}
       </div>
