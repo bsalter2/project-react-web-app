@@ -117,7 +117,7 @@ function ProfileScreen() {
               <div
                 className="col-4 d-flex justify-content-center"
                 onClick={
-                  profile.followers.length !== 0 ? handleFollowersClick : null
+                  profile.followers && profile.followers.length !== 0 ? handleFollowersClick : null
                 }
               >
                 <label>
@@ -127,7 +127,7 @@ function ProfileScreen() {
               <div
                 className="col-4 d-flex justify-content-center"
                 onClick={
-                  profile.followings.length !== 0 ? handleFollowingClick : null
+                  profile.followings && profile.followings.length !== 0 ? handleFollowingClick : null
                 }
               >
                 <label>
