@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { Navigate } from "react-router";
 
 const ListItem = styled.li`
   display: flex;
@@ -36,9 +37,16 @@ const RecipeImage = styled.img`
 `;
 
 const RecipeSummaryItem = ({ recipe }) => {
+
+  const handleNavigate = (recipeId) => {
+    Navigate(`/details/${recipeId}`);
+  };
   return (
     <ListItem>
-      <RecipeLink to={`/details/${recipe.id}`}>
+      <RecipeLink
+        to={`/details/${recipe.id}`}
+        onClick={() => handleNavigate(recipe.id)}
+      >
         <RecipeTitle>{recipe.title}</RecipeTitle>
         <RecipeImage
           src={recipe.image}

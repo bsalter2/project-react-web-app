@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { findAllRecipesLikedThunk } from "../services/recipes-thunk";
+import { findAllRecipesLikedThunk, findAllRecipesThunk } from "../services/recipes-thunk";
 import { useNavigate } from "react-router";
 
 function ProfileLikes() {
@@ -18,6 +18,7 @@ function ProfileLikes() {
   useEffect(() => {
     const fetchRecipes = async () => {
       const { payload } = await dispatch(findAllRecipesLikedThunk());
+      await dispatch(findAllRecipesThunk());
       if (payload) {
         const updatedLikes = currentUser.likes.map((like) => {
           const recipe = payload.find((recipe) => recipe.recipeId === like);
