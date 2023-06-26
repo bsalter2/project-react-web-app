@@ -8,6 +8,7 @@ function ProfileLikes() {
   const navigate = useNavigate();
   const { currentUser } = useSelector((state) => state.currentUser);
   const { recipes } = useSelector((state) => state.recipes);
+  const [likedRecipes, setLikedRecipes] = useState(recipes);
   const [likes, setLikes] = useState([]);
 
   const handleNavigate = (recipeId) => {
@@ -19,11 +20,9 @@ function ProfileLikes() {
       const { payload } = await dispatch(findAllRecipesLikedThunk());
       if (payload) {
         const updatedLikes = currentUser.likes.map((like) => {
-          const recipe = payload.find(
-            (recipe) => recipe.recipeId === like.recipeId
-          );
+          const recipe = payload.find((recipe) => recipe.recipeId === like);
           return {
-            ...like,
+            recipeId: like,
             recipeTitle: recipe ? recipe.name : "",
           };
         });
@@ -37,12 +36,13 @@ function ProfileLikes() {
     <div className="container">
       <div className="row">
         {likes.map((like) => (
-          <div>
-            <div className="col-md-6" key={like._id}>
-              <div className="card mb-3" onClick={() => handleNavigate(like.recipeId)}>
-                <div className="card-body">
-                  <h5 className="card-title">{like.recipeTitle}</h5>
-                </div>
+          <div className="col-md-6" key={like.recipeId}>
+            <div
+              className="card mb-3"
+              onClick={() => handleNavigate(like.recipeId)}
+            >
+              <div className="card-body">
+                <h5 className="card-title">{like.recipeTitle}</h5>
               </div>
             </div>
           </div>

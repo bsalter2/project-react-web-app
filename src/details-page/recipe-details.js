@@ -1,4 +1,4 @@
-import React, { useState, useEffect  } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -7,7 +7,6 @@ import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { updateRecipeThunk } from "../services/recipes-thunk";
 import { updateUserThunk } from "../services/users-thunk";
 import { profileThunk } from "../services/auth-thunk";
-
 
 const Container = styled.div`
   position: relative;
@@ -88,7 +87,6 @@ const RecipeItem = ({ recipe }) => {
   const [profile, setProfile] = useState(currentUser);
   const [isLiked, setLike] = useState(false);
 
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -96,10 +94,10 @@ const RecipeItem = ({ recipe }) => {
     if (profile) {
       for (const id of profile.likes) {
         if (id == recipe.recipeId) {
-          return true
+          return true;
         }
       }
-      return false
+      return false;
     } else {
       return false;
     }
@@ -109,8 +107,7 @@ const RecipeItem = ({ recipe }) => {
     let updatedRecipe = {};
     let updatedUser = {};
     let pageRecipe = {};
-
-    console.log(isLiked)
+    
     if (isLiked) {
       updatedRecipe = {
         name: _recipe.title,
@@ -118,11 +115,11 @@ const RecipeItem = ({ recipe }) => {
         likes: _recipe.likes - 1,
       };
       pageRecipe = { ..._recipe, likes: _recipe.likes - 1 };
-      const newLikes = []
+      const newLikes = [];
       for (const id of profile.likes) {
-          if (id !== _recipe.recipeId) {
-            newLikes.push(id)
-          }
+        if (id !== _recipe.recipeId) {
+          newLikes.push(id);
+        }
       }
       updatedUser = {
         ...profile,
@@ -145,7 +142,7 @@ const RecipeItem = ({ recipe }) => {
       dispatch(updateUserThunk(updatedUser));
     }
     setProfile(updatedUser);
-    setLike(!isLiked)
+    setLike(!isLiked);
     setRecipe(pageRecipe);
   };
 
@@ -154,8 +151,8 @@ const RecipeItem = ({ recipe }) => {
       const { payload } = await dispatch(profileThunk());
       setProfile(payload);
       if (profile) {
-        const result = protectedMethod()
-        setLike(result)
+        const result = protectedMethod();
+        setLike(result);
       }
     };
     loadProfile();

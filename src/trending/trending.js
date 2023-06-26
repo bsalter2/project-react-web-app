@@ -82,7 +82,7 @@ const UserItem = ({ user }) => (
 const TrendingSidebar = () => {
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  useEffect( () => {
     dispatch(getAllUsersThunk());
     dispatch(findAllRecipesThunk());
   }, [dispatch]);

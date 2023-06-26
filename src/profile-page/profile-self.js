@@ -41,7 +41,7 @@ function ProfileScreen() {
     };
     loadProfile();
   }, [dispatch]);
-  
+
   return (
     <Text>
       <div>
@@ -137,7 +137,7 @@ function ProfileScreen() {
               </div>
               <div
                 className="col-4 d-flex justify-content-center"
-                onClick={profile.likes.length !== 0 ? handleLikesClick : null}
+                onClick={profile.likes && profile.likes.length ? handleLikesClick : null}
               >
                 <label>Likes: {profile.likes ? profile.likes.length : 0}</label>
               </div>
