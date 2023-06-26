@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const SERVER = "http://localhost:4000";
+// const SERVER = "http://localhost:4000";
+const SERVER = "https://project-node-server-app.onrender.com/";
 const BASE_API = `${SERVER}/api/users`;
 
 const request = axios.create({

@@ -4,7 +4,8 @@ const RECIPES_API = "https://api.spoonacular.com/recipes/complexSearch";
 const SINGLE_RECIPE_API = "https://api.spoonacular.com/recipes/";
 const API_KEY = "?apiKey=d159ea975e0240f096bedd37d96044bd";
 
-const SERVER = "http://localhost:4000";
+// const SERVER = "http://localhost:4000";
+const SERVER = "https://project-node-server-app.onrender.com/";
 const BASE_API = `${SERVER}/api/recipes`;
 
 export const findAllRecipes = async () => {
